@@ -1,5 +1,3 @@
-
-<!-- done for they day -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +5,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
-    <script src="js/jspdf.min.js"></script> <!-- Include the locally saved jsPDF library -->
+    <script src="jspdf.min.js"></script> <!-- Include the locally saved jsPDF library -->
     <style>
         #sentence {
             width: 100%;
@@ -117,8 +115,17 @@
             recognition.interimResults = false;
 
             $('#voice-button').click(function() {
-                // Start voice recognition when the button is clicked
-                recognition.start();
+                if (recognition.isListening) {
+                    // If it's already listening, stop listening and change the icon
+                    recognition.stop();
+                    $('#voice-button i').removeClass('fa-volume-up').addClass('fa-microphone');
+                    $('#voice-button span').text('Voice');
+                } else {
+                    // Start voice recognition when the button is clicked
+                    recognition.start();
+                    $('#voice-button i').removeClass('fa-microphone').addClass('fa-volume-up');
+                    $('#voice-button span').text('Listening');
+                }
             });
 
             recognition.onresult = function(event) {
@@ -133,6 +140,8 @@
             recognition.onend = function() {
                 // Stop recognition when finished
                 recognition.stop();
+                $('#voice-button i').removeClass('fa-volume-up').addClass('fa-microphone');
+                $('#voice-button span').text('Voice');
             };
         });
 
