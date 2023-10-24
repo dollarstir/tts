@@ -5,7 +5,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
-    <script src="jspdf.min.js"></script> <!-- Include the locally saved jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
     <style>
         #sentence {
             width: 100%;
@@ -61,6 +62,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
     <script>
         function updateImages(content) {
             var sentence = content.toUpperCase();
@@ -146,15 +150,15 @@
         });
 
         function saveAsPDF() {
-            // Capture the content of the image container as an image
+            // Capture the content of the image container as an image using html2canvas
             html2canvas(document.getElementById('image-container')).then(function(canvas) {
                 var imgData = canvas.toDataURL('image/png');
 
                 // Create a new jsPDF instance
-                var pdf = new jsPDF('p', 'pt', 'a4');
+                var pdf = new jsPDF("p", "mm", "a4");
 
                 // Calculate the width and height of the PDF page
-                var width = pdf.internal.pageSize.getWidth();
+                var width = 100;
                 var height = (canvas.height * width) / canvas.width;
 
                 // Add the image to the PDF
