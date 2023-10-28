@@ -39,13 +39,6 @@
             width: 30px; /* Adjust the size as needed */
             display: inline-block;
         }
-
-        #keyboard-container img {
-            width: 50px;
-            height: auto;
-            cursor: pointer;
-            margin: 5px;
-        }
     </style>
 </head>
 <body>
@@ -61,10 +54,6 @@
             <div class="col-md-6">
                 <div id="image-container" class="text-center">
                     <!-- The images will be displayed here -->
-                </div>
-                <h2 id="keyboard-heading">Sign Language Keyboard</h2>
-                <div id="keyboard-container" class="text-center mt-3">
-                    <!-- The keyboard images will be displayed here -->
                 </div>
             </div>
         </div>
@@ -179,54 +168,6 @@
                 pdf.save('sign_language_images.pdf');
             });
         }
-
-        // Function to add keyboard images
-        function addKeyboardImages() {
-            var keyboardContainer = $('#keyboard-container');
-            keyboardContainer.empty(); // Clear previous keyboard images
-
-            // Add images for 'A' to 'Z' and a space
-            for (var letter = 'A'; letter <= 'Z'; letter = String.fromCharCode(letter.charCodeAt(0) + 1)) {
-                var img = $('<img>');
-                img.attr('src', 'images/' + letter + '.webp');
-                img.attr('alt', letter);
-                img.addClass('keyboard-image');
-                img.click(function () {
-                    var letterClicked = $(this).attr('alt');
-                    var currentText = $('#sentence').val();
-                    $('#sentence').val(currentText + letterClicked);
-                    updateImages(currentText + letterClicked);
-                });
-                keyboardContainer.append(img);
-            }
-
-            // Add a space image
-            var spaceImg = $('<img>');
-            spaceImg.attr('src', 'images/space.png');
-            spaceImg.attr('alt', ' ');
-            spaceImg.addClass('keyboard-image');
-            spaceImg.click(function () {
-                var currentText = $('#sentence').val();
-                $('#sentence').val(currentText + ' ');
-                updateImages(currentText + ' ');
-            });
-            keyboardContainer.append(spaceImg);
-
-            // Add a backspace image
-            var backspaceImg = $('<img>');
-            backspaceImg.attr('src', 'images/backspace.png');
-            backspaceImg.attr('alt', 'Backspace');
-            backspaceImg.addClass('keyboard-image');
-            backspaceImg.click(function () {
-                var currentText = $('#sentence').val();
-                $('#sentence').val(currentText.slice(0, -1)); // Remove the last character
-                updateImages(currentText.slice(0, -1));
-            });
-            keyboardContainer.append(backspaceImg);
-        }
-
-        // Call the function to add keyboard images
-        addKeyboardImages();
     </script>
 </body>
 </html>
