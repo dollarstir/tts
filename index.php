@@ -1,58 +1,134 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Language Images</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
-    <style>
-        #sentence {
-            width: 100%;
-            height: 70vh;
-            outline: none;
-            border: none;
-            padding: 30px;
-            font-size: 2rem;
-            background: #f7f7f7;
-            resize: none;
-            border-radius: 5px;
-            font-family: UberMove;
-        }
+    <!-- ... (previous code) ... -->
+<style>
+    body {
+        background-color: #f0f0f0;
+        color: #333;
+        font-family: Arial, sans-serif;
+    }
 
-        #image-container {
-            margin: 0;
-            padding: 10px;
-            background: #000;
-            height: auto;
-            bottom: 0;
-            border-radius: 5px;
-        }
+    #page-content {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+    }
 
-        #image-container img {
-            width: 50px; /* Adjust the size as needed */
-            height: auto;
-        }
+    #sentence {
+        width: 100%;
+        height:50vh;
+        outline: none;
+        border: none;
+        padding: 20px;
+        font-size: 1.5rem;
+        background: #f7f7f7;
+        resize: none;
+        border-radius: 10px;
+        font-family: Arial, sans-serif;
+        color: #333;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
 
-        #image-container .space {
-            width: 30px; /* Adjust the size as needed */
-            display: inline-block;
-        }
+    #image-container {
+        margin: 0;
+        padding: 10px;
+        background: #333;
+        height: auto;
+        border-radius: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-        #keyboard-container img {
-            width: 50px;
-            height: auto;
-            cursor: pointer;
-            margin: 5px;
-        }
-    </style>
+    #image-container img {
+        width: 50px;
+        height: auto;
+        margin: 5px;
+        position: relative;
+    }
+
+    #image-container .img-letter {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 18px;
+        color: #fff;
+    }
+
+    #image-container .space {
+        width: 30px;
+        display: inline-block;
+    }
+
+    #keyboard-container {
+        background: #333;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    #keyboard-heading {
+        color: #fff;
+    }
+
+    #keyboard-container img {
+        width: 50px;
+        height: auto;
+        cursor: pointer;
+        margin: 5px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .keyboard-image:hover {
+        background: #fff;
+        border: 2px solid #333;
+        border-radius: 50%;
+    }
+
+    .keyboard-letter {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end; /* Align text to the bottom */
+        font-weight: bold;
+        font-size: 18px;
+        color: #fff;
+        text-align: center;
+    }
+
+    .btn {
+        font-size: 1rem;
+    }
+</style>
+<!-- ... (remaining code) ... -->
+
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5" id="page-content">
         <div class="row">
             <div class="col-md-6">
-                <textarea id="sentence" class="form-control" required></textarea>
+                <textarea id="sentence" class="form-control" placeholder="Type your sentence here..." required></textarea>
                 <button class="btn btn-primary mt-2" id="import-button"><i class="fas fa-file-import"></i> Import File</button>
                 <button class="btn btn-success mt-2" id="save-button"><i class="fas fa-save"></i> Save</button>
                 <button class="btn btn-info mt-2" id="voice-button"><i class="fas fa-microphone"></i> Voice</button>
@@ -62,7 +138,7 @@
                 <div id="image-container" class="text-center">
                     <!-- The images will be displayed here -->
                 </div>
-                <h2 id="keyboard-heading">Sign Language Keyboard</h2>
+                <h2 id="keyboard-heading" class="text-center mt-3" style="color:black;">Sign Language Keyboard</h2>
                 <div id="keyboard-container" class="text-center mt-3">
                     <!-- The keyboard images will be displayed here -->
                 </div>
@@ -77,7 +153,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
     <script>
-        function updateImages(content) {
+        // Your JavaScript code remains the same
+
+         // Your JavaScript code remains the same
+
+         function updateImages(content) {
             var sentence = content.toUpperCase();
             var imageContainer = $('#image-container');
             imageContainer.empty(); // Clear previous images
@@ -92,6 +172,8 @@
                     var img = $('<img>');
                     img.attr('src', 'images/' + letter + '.webp');
                     img.attr('alt', letter);
+                    var letterOverlay = $('<div class="img-letter">' + letter + '</div>');
+                    img.append(letterOverlay); // Add the letter overlay to the image
                     imageContainer.append(img);
                 }
             }
